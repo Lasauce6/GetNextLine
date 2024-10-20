@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbaticle <rbaticle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 21:00:50 by rbaticle          #+#    #+#             */
-/*   Updated: 2024/10/18 00:40:21 by rbaticle         ###   ########.fr       */
+/*   Created: 2024/10/18 00:41:45 by rbaticle          #+#    #+#             */
+/*   Updated: 2024/10/20 21:35:46 by rbaticle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_line(char *str)
 {
@@ -98,20 +98,23 @@ char	*set_new_m_str(char *m_str)
 
 char	*get_next_line(int fd)
 {
-	static char	*m_str;
+	static char	*m_str[4096];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	m_str = read_m_str(fd, m_str);
-	if (!m_str)
+	m_str[fd] = read_m_str(fd, m_str[fd]);
+	if (!m_str[fd])
 		return (NULL);
-	line = get_line(m_str);
-	m_str = set_new_m_str(m_str);
-	if (*line == 0)
+	line = get_line(m_str[fd]);
+	if (line)
 	{
-		free(line);
-		return (0);
+		m_str[fd] = set_new_m_str(m_str[fd]);
+		if (*line == 0)
+		{
+			free(line);
+			return (0);
+		}
 	}
 	return (line);
 }
