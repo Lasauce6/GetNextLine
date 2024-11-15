@@ -6,7 +6,7 @@
 /*   By: rbaticle <rbaticle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:00:50 by rbaticle          #+#    #+#             */
-/*   Updated: 2024/10/18 00:40:21 by rbaticle         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:03:07 by rbaticle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	*get_line(char *str)
 	while (str[i] && str[i] != '\n')
 		i++;
 	if (str[i] == '\n')
-		line = malloc(i + 1);
+		line = malloc(i + 2);
 	else
-		line = malloc(i);
+		line = malloc(i + 1);
 	if (!line)
 		return (0);
 	i = 0;
