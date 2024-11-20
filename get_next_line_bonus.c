@@ -6,11 +6,12 @@
 /*   By: rbaticle <rbaticle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 00:41:45 by rbaticle          #+#    #+#             */
-/*   Updated: 2024/11/15 11:12:49 by rbaticle         ###   ########.fr       */
+/*   Updated: 2024/11/20 09:56:56 by rbaticle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 char	*get_line(char *str)
 {
@@ -55,10 +56,7 @@ char	*read_m_str(int fd, char *m_str)
 	{
 		bytes = read(fd, buff, BUFFER_SIZE);
 		if (bytes == -1)
-		{
-			free(buff);
-			return (NULL);
-		}
+			return (free(buff), NULL);
 		buff[bytes] = '\0';
 		temp = m_str;
 		m_str = ft_strjoin(m_str, buff);
@@ -66,34 +64,6 @@ char	*read_m_str(int fd, char *m_str)
 	}
 	free(buff);
 	return (m_str);
-}
-
-char	*set_new_m_str(char *m_str)
-{
-	size_t	i;
-	size_t	j;
-	char	*new_m_str;
-
-	i = 0;
-	while (m_str[i] && m_str[i] != '\n')
-		i++;
-	if (!m_str[i])
-	{
-		free(m_str);
-		return (NULL);
-	}
-	new_m_str = malloc(ft_strlen(m_str) - i + 1);
-	if (!new_m_str)
-	{
-		free(m_str);
-		return (NULL);
-	}
-	j = 0;
-	while (m_str[++i])
-		new_m_str[j++] = m_str[i];
-	new_m_str[j] = '\0';
-	free(m_str);
-	return (new_m_str);
 }
 
 void	free_m_str(char *m_str[4096])
@@ -106,6 +76,30 @@ void	free_m_str(char *m_str[4096])
 		if (m_str[i])
 			free(m_str[i]);
 	}
+}
+
+char	*set_new_m_str(char *m_str[4096], int fd)
+{
+	size_t	i;
+	size_t	j;
+	char	*new_m_str;
+
+	i = 0;
+	while (m_str[fd][i] && m_str[fd][i] != '\n')
+		i++;
+	if (!m_str[fd][i] || !m_str[fd][i + 1])
+	{
+		free(m_str[fd]);
+		return (NULL);
+	}
+	new_m_str = malloc(ft_strlen(m_str[fd]) - i + 1);
+	if (!new_m_str)
+		return (free_m_str(m_str), NULL);
+	j = 0;
+	while (m_str[fd][++i])
+		new_m_str[j++] = m_str[fd][i];
+	new_m_str[j] = '\0';
+	return (free(m_str[fd]), new_m_str);
 }
 
 char	*get_next_line(int fd)
@@ -121,12 +115,12 @@ char	*get_next_line(int fd)
 	line = get_line(m_str[fd]);
 	if (line)
 	{
-		m_str[fd] = set_new_m_str(m_str[fd]);
 		if (*line == 0)
 		{
 			free(line);
 			return (0);
 		}
+		m_str[fd] = set_new_m_str(m_str, fd);
 	}
 	else
 		free_m_str(m_str);

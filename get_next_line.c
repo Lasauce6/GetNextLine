@@ -6,7 +6,7 @@
 /*   By: rbaticle <rbaticle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:00:50 by rbaticle          #+#    #+#             */
-/*   Updated: 2024/11/15 11:03:07 by rbaticle         ###   ########.fr       */
+/*   Updated: 2024/11/20 09:47:17 by rbaticle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*set_new_m_str(char *m_str)
 	i = 0;
 	while (m_str[i] && m_str[i] != '\n')
 		i++;
-	if (!m_str[i])
+	if (!m_str[i] || !m_str[i + 1])
 	{
 		free(m_str);
 		return (NULL);
