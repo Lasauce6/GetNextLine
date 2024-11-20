@@ -6,12 +6,11 @@
 /*   By: rbaticle <rbaticle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 00:41:45 by rbaticle          #+#    #+#             */
-/*   Updated: 2024/11/20 09:56:56 by rbaticle         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:37:49 by rbaticle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include "get_next_line.h"
 
 char	*get_line(char *str)
 {
