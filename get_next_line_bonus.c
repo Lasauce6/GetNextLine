@@ -6,7 +6,7 @@
 /*   By: rbaticle <rbaticle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 00:41:45 by rbaticle          #+#    #+#             */
-/*   Updated: 2024/11/20 15:37:49 by rbaticle         ###   ########.fr       */
+/*   Updated: 2024/12/18 14:20:41 by rbaticle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,12 @@ char	*get_next_line(int fd)
 	{
 		if (*line == 0)
 		{
-			free(line);
-			return (0);
+			if (m_str[fd])
+			{
+				free(m_str[fd]);
+				m_str[fd] = NULL;
+			}
+			return (free(line), NULL);
 		}
 		m_str[fd] = set_new_m_str(m_str, fd);
 	}
